@@ -33,7 +33,7 @@ class BuyList {
             const el = document.createElement('li')
             el.innerHTML = `
             <div class="alert alert-success" role="alert">
-              ${task.name}${'&nbsp'}${task.price}
+              ${buy.name}${'&nbsp'}${buy.price}
             </div>
             `
             listEl.appendChild(el)
