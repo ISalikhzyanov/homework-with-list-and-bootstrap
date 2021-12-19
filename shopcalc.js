@@ -6,6 +6,8 @@ const numberEl = document.getElementById('number');
 const sumEl = document.getElementById('sum');
 const maxEl = document.getElementById('max')
 const tovEl = document.getElementById('tov')
+const upEL = document.getElementById('arrow-up');
+const downEl = document.getElementById('arrow-down')
 
 class Buy {
     constructor(name, price) {
@@ -54,6 +56,19 @@ class BuyList {
             const el = document.createElement('li')
 
             //
+
+            upEL.addEventListener("click", () => {
+                let up = 0
+                buy[this.list.length] = up;
+                buy[this.list.length - 1] = buy[this.list.length]
+                up = buy
+
+                for (const buy of this.list) {
+                    const elUp = document.createElement('li')
+
+
+                }
+            })
             el.innerHTML = `
             <div class="alert alert-success" role="alert">
               ${buy.name}${'&nbsp'}${buy.price}
