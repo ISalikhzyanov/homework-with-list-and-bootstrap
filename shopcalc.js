@@ -55,23 +55,34 @@ class BuyList {
         for (const buy of this.list) {
             const el = document.createElement('li')
 
+
             //
 
             upEL.addEventListener("click", () => {
-                let up = 0
-                buy[this.list.length] = up;
-                buy[this.list.length - 1] = buy[this.list.length]
-                up = buy
-
-                for (const buy of this.list) {
-                    const elUp = document.createElement('li')
+                this.render()
+                this.list[this.list.length] = this.list[this.list.length - 1]
+                this.list[this.list.length - 1] = this.list[this.list.length]
+                console.log(buy[this.list.length])
 
 
-                }
             })
+
             el.innerHTML = `
             <div class="alert alert-success" role="alert">
-              ${buy.name}${'&nbsp'}${buy.price}
+             ${buy.name}${'&nbsp'}${buy.price}
+             <button> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="arrow-up"
+         viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+    </svg></button> 
+    <button id="two">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="arrow-down"
+         viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+    </svg>
+</button>
+
         
             </div>
             `
