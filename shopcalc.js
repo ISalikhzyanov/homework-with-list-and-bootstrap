@@ -6,8 +6,7 @@ const numberEl = document.getElementById('number');
 const sumEl = document.getElementById('sum');
 const maxEl = document.getElementById('max')
 const tovEl = document.getElementById('tov')
-const upEL = document.getElementById('arrow-up');
-const downEl = document.getElementById('arrow-down')
+
 
 class Buy {
     constructor(name, price) {
@@ -53,30 +52,20 @@ class BuyList {
     render() {
         listEl.innerHTML = '';
         for (const buy of this.list) {
-            const el = document.createElement('li')
+            const el = document.createElement('li');
+            const index = this.list.indexOf(buy);
 
-
-            //
-
-            upEL.addEventListener("click", () => {
-                this.render()
-                this.list[this.list.length] = this.list[this.list.length - 1]
-                this.list[this.list.length - 1] = this.list[this.list.length]
-                console.log(buy[this.list.length])
-
-
-            })
 
             el.innerHTML = `
             <div class="alert alert-success" role="alert">
-             ${buy.name}${'&nbsp'}${buy.price}
-             <button> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="arrow-up"
+             ${buy.name}&nbsp${buy.price}
+             <button id="up"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
          viewBox="0 0 16 16">
         <path fill-rule="evenodd"
               d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
     </svg></button> 
-    <button id="two">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="arrow-down"
+    <button id="down">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
          viewBox="0 0 16 16">
         <path fill-rule="evenodd"
               d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
@@ -87,6 +76,20 @@ class BuyList {
             </div>
             `
             listEl.appendChild(el)
+            const upEl = el.querySelector('#up');
+            upEl.addEventListener('click', () => {
+                if (index > 0) {
+                    [this.list[index], this.list[index - 1]] = [this.list[index - 1], this.list[index]]
+                }
+                this.render()
+            })
+            const downEl = el.querySelector('#down');
+            downEl.addEventListener('click', () => {
+                if (index < this.list.length-1) {
+                    [this.list[index], this.list[index + 1]] = [this.list[index + 1], this.list[index]]
+                }
+                this.render()
+            })
         }
 
 
