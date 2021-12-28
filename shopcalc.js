@@ -6,8 +6,9 @@ const numberEl = document.getElementById('number');
 const sumEl = document.getElementById('sum');
 const maxEl = document.getElementById('max')
 const tovEl = document.getElementById('tov')
-
-
+const styleEl = document.querySelector('.form-control').classList;
+const delEl=document.getElementById('delete')
+const value = localStorage.getItem('key')
 class Buy {
     constructor(name, price) {
         this.name = name;
@@ -27,6 +28,15 @@ class BuyList {
         this.list.push(buy);
         this.render()
         this.meaning()
+        localStorage.setItem('key', JSON.stringify(this.list))
+        delEl.addEventListener('click',()=>{
+            localStorage.clear();
+            this.list='';
+            numberEl.textContent = 'Количество покупок: 0'
+            this.render();
+            this.meaning();
+
+        })
     }
 
     meaning() {
@@ -50,13 +60,15 @@ class BuyList {
     }
 
     render() {
+
         listEl.innerHTML = '';
         for (const buy of this.list) {
             const el = document.createElement('li');
             const index = this.list.indexOf(buy);
 
-if (index === 0){
-            el.innerHTML = `
+            if (index === 0) {
+                el.innerHTML = JSON.parse(value);
+                el.innerHTML = `
             <div class="alert alert-success" role="alert">
              ${buy.name}&nbsp${buy.price}
             
@@ -70,8 +82,9 @@ if (index === 0){
 
         
             </div>
-            `}
-else  if (index === this.list.length-1){el.innerHTML = `
+            `
+            } else if (index === this.list.length - 1) {
+                el.innerHTML = `
             <div class="alert alert-success" role="alert">
              ${buy.name}&nbsp${buy.price}
              <button id="up"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
@@ -83,8 +96,9 @@ else  if (index === this.list.length-1){el.innerHTML = `
 
     
             </div>
-            `}
-else {el.innerHTML = `
+            `
+            } else {
+                el.innerHTML = `
             <div class="alert alert-success" role="alert">
              ${buy.name}&nbsp${buy.price}
              <button id="up"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
@@ -102,27 +116,30 @@ else {el.innerHTML = `
 
         
             </div>
-            `}
+            `
+            }
             listEl.appendChild(el)
 
 
             const upEl = el.querySelector('#up');
-if (index>0){
-            upEl.addEventListener('click', () => {
+            if (index > 0) {
+                upEl.addEventListener('click', () => {
 
                     [this.list[index], this.list[index - 1]] = [this.list[index - 1], this.list[index]]
 
-                this.render()
-            })}
+                    this.render()
+                })
+            }
 
-if (index<this.list.length-1){
-            const downEl = el.querySelector('#down');
-            downEl.addEventListener('click', () => {
+            if (index < this.list.length - 1) {
+                const downEl = el.querySelector('#down');
+                downEl.addEventListener('click', () => {
 
                     [this.list[index], this.list[index + 1]] = [this.list[index + 1], this.list[index]]
 
-                this.render()
-            })}
+                    this.render()
+                })
+            }
         }
 
 
@@ -138,6 +155,10 @@ formEl.addEventListener('submit', (e) => {
     const buy = new Buy(buyName, Number(price));
     store.add(buy)
     console.log(store.list)
+})
+formEl.addEventListener('input', () => {
+    styleEl.remove('red')
+
 })
 
 
