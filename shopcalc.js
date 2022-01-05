@@ -7,8 +7,8 @@ const sumEl = document.getElementById('sum');
 const maxEl = document.getElementById('max')
 const tovEl = document.getElementById('tov')
 const styleEl = document.querySelector('.form-control').classList;
-const delEl=document.getElementById('delete')
-const value = localStorage.getItem('key')
+const delEl = document.getElementById('delete')
+
 class Buy {
     constructor(name, price) {
         this.name = name;
@@ -21,22 +21,34 @@ class Buy {
 class BuyList {
     constructor() {
         this.list = []
-    }
-
-
-    add(buy) {
-        this.list.push(buy);
+        let value = localStorage.getItem('key')
+        if (value === '') {
+            this.list = []
+        }
+        else {this.list=JSON.parse(value)}
         this.render()
-        this.meaning()
-        localStorage.setItem('key', JSON.stringify(this.list))
-        delEl.addEventListener('click',()=>{
+
+
+        delEl.addEventListener('click', () => {
             localStorage.clear();
-            this.list='';
+            this.list = [];
             numberEl.textContent = 'Количество покупок: 0'
             this.render();
             this.meaning();
 
         })
+
+    }
+
+
+    add(buy) {
+
+
+        this.list.push(buy);
+        this.render()
+        this.meaning()
+        localStorage.setItem('key', JSON.stringify(this.list))
+
     }
 
     meaning() {
@@ -67,7 +79,7 @@ class BuyList {
             const index = this.list.indexOf(buy);
 
             if (index === 0) {
-                el.innerHTML = JSON.parse(value);
+
                 el.innerHTML = `
             <div class="alert alert-success" role="alert">
              ${buy.name}&nbsp${buy.price}
